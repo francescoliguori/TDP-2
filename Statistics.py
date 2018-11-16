@@ -23,18 +23,20 @@ class Statistics:
     def _popola_albero(self,file_input):
         #questa funzione popola l'albero con gli elementi del dataset. Se nella add non sarà necessario agiornare il dataset allora si
         #potrà rifinire ulteriormente il codice chiamando nel while line la funzione add
-
-        with open(file_input, "r") as file:  # lo statement with ci chiude il file automaticamente
-            line = file.readline()  # readline legge una riga volta per volta
-            while line:  # fino a quando la riga non è none
-                lista = line.split(" ")  # prende gli elementi separati dallo spazio e li mette in una lista, i valori sono stringhe
-                p = self.avl.find_position(int(lista[0]))  # controlla se la chiave è nell'albero
-                if p is not None and p.key() == int(lista[0]):  # se p non ha trovato la chiave o ritorna None oppure il suo vicino(motivo della seconda condizione)
-                    self.avl[int(lista[0])][0] += 1  # aumenta di uno le occorrenze
-                    self.avl[int(lista[0])][1] += int(lista[1])  # somma a total il value
-                else:
-                    self.avl[int(lista[0])] = [1, int(lista[1])]  # crea un nodo con occorrenza a 1 e total pari al valore
-                line = file.readline()  # passa alla riga successiva
+        try:
+            with open(file_input, "r") as file:  # lo statement with ci chiude il file automaticamente
+                line = file.readline()  # readline legge una riga volta per volta
+                while line:  # fino a quando la riga non è none
+                    lista = line.split(" ")  # prende gli elementi separati dallo spazio e li mette in una lista, i valori sono stringhe
+                    p = self.avl.find_position(int(lista[0]))  # controlla se la chiave è nell'albero
+                    if p is not None and p.key() == int(lista[0]):  # se p non ha trovato la chiave o ritorna None oppure il suo vicino(motivo della seconda condizione)
+                        self.avl[int(lista[0])][0] += 1  # aumenta di uno le occorrenze
+                        self.avl[int(lista[0])][1] += int(lista[1])  # somma a total il value
+                    else:
+                        self.avl[int(lista[0])] = [1, int(lista[1])]  # crea un nodo con occorrenza a 1 e total pari al valore
+                    line = file.readline()  # passa alla riga successiva
+        except:
+            print("impossibile aprire il file. Controllare che il nome e/o path sia corretto.")
 
     def add(self, k, v):
         p = self.avl.find_position(k)  # controlla se la chiave è nell'albero
@@ -48,6 +50,7 @@ class Statistics:
         with open(self._file_input, 'a') as file:  # 'a' aggiorna il file scrivendo una nuova riga alla fine
 
             file.write("\n{} {}".format(k, v))  # .format sostituisce alle {} il valore che gli abbiamo passato
+
 
     def len(self):
         return len(self.avl)
