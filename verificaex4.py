@@ -30,8 +30,11 @@ class TestProjectEx4(unittest.TestCase):
         print("la sottostringa non è presente")
 
     def test_circular_substring(self):
-        print("----test cricular substring  ----")
+        print("----test circular substring  ----")
         substring="ocia"
         print("substring : ",substring)
         self.assertTrue(circular_substring(substring,STRING))
         print("la sottostringa è presente")
+
+if __name__ == "__main__":
+    unittest.main()
