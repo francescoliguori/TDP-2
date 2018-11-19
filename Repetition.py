@@ -1,59 +1,38 @@
-# import os
-# import hashlib
-# import _md5
-# import sys
-# import filecmp
-# import stat
-# import io
-# def find_repetition(dir):
-#     unique = []
-#     list=[]
-#     for filename in os.listdir(dir):
-#
-#         filepath=dir+filename
-#         if os.path.isfile(filepath):
-#
-#             filehash = _md5.md5(io.StringIO(filename).read().encode('utf-8')).hexdigest()
-#
-#         if filehash not in unique:
-#
-#             unique.append(filehash)
-#         else:
-#
-#             list.append(filename)
-#     return list
-#
-# if __name__=="__main__":
-#     #dir="../filetest/"
-#     dir = "./filetest/"
-#     print(find_repetition(dir))
-
 import os
 import hashlib
-import _md5
-import sys
-import filecmp
-import stat
-import io
-def find_repetition(dir):
-    unique = []
-    list=[]
-    for filename in os.listdir(dir):
-        print(filename)
-        filepath=dir+filename
+
+
+def chunk_reader(fileobj, chunk_size=1024):
+    """Generator that reads a file in chunks of bytes"""
+    while True:
+        chunk = fileobj.read(chunk_size)
+        if not chunk:
+            return
+        yield chunk
+
+
+def find_repetition(folder):
+    unique, duplicate = [], []
+    for filename in os.listdir(folder):
+        # print(filename)
+        filepath = folder + filename
         if os.path.isfile(filepath):
+            md5 = hashlib.md5()
+            try:
+                with open(filepath, 'rb') as file:
+                    for chunk in chunk_reader(file):
+                        md5.update(chunk)
+                    filehash = md5.hexdigest()
+            except FileNotFoundError as e:
+                print("Impossibile aprire il file. Controllare che il path sia corretto.")
+            if filehash not in unique:
+                unique.append(filehash)
+            else:
+                duplicate.append(filename)
+    return duplicate
 
-            filehash = hashlib.md5(open(filepath, 'rb').read()).hexdigest()  #modificato qui
 
-        if filehash not in unique:
+if __name__ == "__main__":
+    folder = "./samefile/"
 
-            unique.append(filehash)
-        else:
-
-            list.append(filename)
-    return list
-
-if __name__=="__main__":
-    dir="./filetest/"
-
-    print(find_repetition(dir))
+    print("File replicati:", find_repetition(folder))
