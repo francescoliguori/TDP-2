@@ -88,6 +88,8 @@ class NewAVLTreeMap(TreeMap):
                     p._node._balance_factor -= 1
                 if p is not None and p.key() < key:
                     p._node._balance_factor += 1
+                if p is not None and p._node._balance_factor == 0:
+                    break
 
     def _rebalance_delete(self, p):
         # if self.right(p) is not None:
@@ -405,124 +407,73 @@ class NewAVLTreeMap(TreeMap):
     #             if b is not None and b == 0:
     #                 break
     #
+
+def _testing_insert(keys, values=6):
+    tree_new_avl = NewAVLTreeMap()
+    lista = keys.split(",")
+    for i in range(len(lista)):
+        tree_new_avl[lista[i]] = values
+        print("\n Inserisco key = ", lista[i])
+        for e in tree_new_avl.preorder():
+            print(e.key(), "balance: ", e._node._balance_factor)
+
+
 if __name__ == "__main__":
     tree_new_avl = NewAVLTreeMap()
-    tree_new_avl[5] = 6
-    for e in tree_new_avl.preorder():
-        print(e.key(), "balance: ", e._node._balance_factor)
 
-    print("")
-    tree_new_avl[10] = 6
-    for e in tree_new_avl.preorder():
-        print(e.key(), "balance: ", e._node._balance_factor)
+    _testing_insert("j,p,f,d,g,l,v,c,n,s,x,q,u")
 
-    print("")
+    _testing_insert("5,10,8,23,6,11,15,16,18,25,1,4")
 
-    tree_new_avl[8] = 6
 
-    for e in tree_new_avl.preorder():
-        print(e.key(), "balance: ", e._node._balance_factor)
-
-    print("")
-    tree_new_avl[23] = 6
-
-    for e in tree_new_avl.preorder():
-        print(e.key(), "balance: ", e._node._balance_factor)
-
-    print("")
-    tree_new_avl[6] = 6
-
-    for e in tree_new_avl.preorder():
-        print(e.key(), "balance: ", e._node._balance_factor)
-
-    print("")
-    tree_new_avl[11] = 6
-
-    for e in tree_new_avl.preorder():
-        print(e.key(), "balance: ", e._node._balance_factor)
-
-    print("")
-    tree_new_avl[15] = 6
-    for e in tree_new_avl.preorder():
-        print(e.key(), "balance: ", e._node._balance_factor)
-
-    print("")
-    tree_new_avl[16] = 6
-
-    for e in tree_new_avl.preorder():
-        print(e.key(), "balance: ", e._node._balance_factor)
-
-    print("")
-    tree_new_avl[18] = 6
-
-    for e in tree_new_avl.preorder():
-        print(e.key(), "balance: ", e._node._balance_factor)
-
-    print("")
-    tree_new_avl[25] = 6
-
-    for e in tree_new_avl.preorder():
-        print(e.key(), "balance: ", e._node._balance_factor)
-
-    print("")
-    tree_new_avl[1] = 6
-
-    for e in tree_new_avl.preorder():
-        print(e.key(), "balance: ", e._node._balance_factor)
-
-    print("")
-    tree_new_avl[4] = 6
-    for e in tree_new_avl.preorder():
-        print(e.key(), "balance: ", e._node._balance_factor)
-
-    print("")
-
-    print("\n\nElimino 10\n")
-
-    del(tree_new_avl[10])
-
-    for e in tree_new_avl.preorder():
-        print(e.key(), "balance: ", e._node._balance_factor)
-
-    print("")
-
-    print("\n\nElimino 25\n")
-
-    del(tree_new_avl[25])
-
-    for e in tree_new_avl.preorder():
-        print(e.key(), "balance: ", e._node._balance_factor)
-    print("")
-
-    # print("\n\nElimino 5\n")
-    # del(tree_new_avl[5])
+    # print("")
+    #
+    # print("\n\nElimino 10\n")
+    #
+    # del(tree_new_avl[10])
     #
     # for e in tree_new_avl.preorder():
     #     print(e.key(), "balance: ", e._node._balance_factor)
-
-    print("\n\nElimino 16\n")
-    del(tree_new_avl[16])
-
-    for e in tree_new_avl.preorder():
-        print(e.key(), "balance: ", e._node._balance_factor)
-
-    print("\n\nElimino 18\n")
-    del(tree_new_avl[18])
-
-    for e in tree_new_avl.preorder():
-        print(e.key(), "balance: ", e._node._balance_factor)
-
-    print("\n\nElimino 11\n")
-    del(tree_new_avl[11])
-
-    for e in tree_new_avl.preorder():
-        print(e.key(), "balance: ", e._node._balance_factor)
-
-    print("\n\nElimino 4\n")
-    del(tree_new_avl[4])
-
-    for e in tree_new_avl.preorder():
-        print(e.key(), "balance: ", e._node._balance_factor)
+    #
+    # print("")
+    #
+    # print("\n\nElimino 25\n")
+    #
+    # del(tree_new_avl[25])
+    #
+    # for e in tree_new_avl.preorder():
+    #     print(e.key(), "balance: ", e._node._balance_factor)
+    # print("")
+    #
+    # # print("\n\nElimino 5\n")
+    # # del(tree_new_avl[5])
+    # #
+    # # for e in tree_new_avl.preorder():
+    # #     print(e.key(), "balance: ", e._node._balance_factor)
+    #
+    # print("\n\nElimino 16\n")
+    # del(tree_new_avl[16])
+    #
+    # for e in tree_new_avl.preorder():
+    #     print(e.key(), "balance: ", e._node._balance_factor)
+    #
+    # print("\n\nElimino 18\n")
+    # del(tree_new_avl[18])
+    #
+    # for e in tree_new_avl.preorder():
+    #     print(e.key(), "balance: ", e._node._balance_factor)
+    #
+    # print("\n\nElimino 11\n")
+    # del(tree_new_avl[11])
+    #
+    # for e in tree_new_avl.preorder():
+    #     print(e.key(), "balance: ", e._node._balance_factor)
+    #
+    # print("\n\nElimino 4\n")
+    # del(tree_new_avl[4])
+    #
+    # for e in tree_new_avl.preorder():
+    #     print(e.key(), "balance: ", e._node._balance_factor)
 
     # print("\n\nElimino 25\n")
     # del(tree_new_avl[25])
