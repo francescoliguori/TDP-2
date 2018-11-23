@@ -3,18 +3,16 @@ import unittest
 
 
 class TestStatics(unittest.TestCase):
-    # def test_popola_albero_da_file(self):
-    #     # with self.assertRaises(FileNotFoundError):
-    #     #     stat = Statistics("Path_errato")
-    #
-    #     with self.assertRaises(ValueError, Statistics("data_set_corrotto")) as e:
-    #         print("Eccezione scattata")
-    #         # stat = Statistics("data_set_corrotto.txt")
-    #         #self.assertEqual("File Corrotto.", e.msg)
-    #
-    #     stat = Statistics("data_set.txt")
-    #     for e in stat.avl.preorder():
-    #         print(e.key(), " ", e.value())
+    def test_popola_albero_da_file(self):
+        with self.assertRaises(FileNotFoundError):
+            stat = Statistics("Path_errato")
+
+        with self.assertRaises(ValueError):
+            stat = Statistics("data_set_corrotto.txt")
+
+        stat = Statistics("data_set.txt")
+        for e in stat.avl.preorder():
+            print(e.key(), " ", e.value())
 
     def test_add(self):
         print("TEST add()\n")
@@ -121,17 +119,20 @@ class TestStatics(unittest.TestCase):
         print("Mediana: ", stat.median())
 
     def test_percentile(self):
+        print("TEST percentile()\n")
         stat = Statistics("data_set_test.txt")
         with self.assertRaises(ValueError):
-            percentile = stat.percentile(-1)
-            percentile = stat.percentile(101)
+            percentile = stat.percentile(0)
+            percentile = stat.percentile(100)
+            percentile = stat.percentile(-5)
+            percentile = stat.percentile(105)
 
         with self.assertRaises(TypeError):
             percentile = stat.percentile("ciao")
             percentile = stat.percentile(50.5)
 
-        self.assertEqual(1, stat.percentile(0))
-        print("Percentile a 0: ", stat.percentile(0))
+        self.assertEqual(1, stat.percentile(1))
+        print("Percentile a 1: ", stat.percentile(1))
 
         self.assertEqual(1, stat.percentile(10))
         print("Percentile a 10: ", stat.percentile(10))
@@ -160,10 +161,11 @@ class TestStatics(unittest.TestCase):
         self.assertEqual(13, stat.percentile(90))
         print("Percentile a 90: ", stat.percentile(90))
 
-        self.assertEqual(15, stat.percentile(100))
-        print("Percentile a 100: ", stat.percentile(100))
+        self.assertEqual(15, stat.percentile(99))
+        print("Percentile a 9: ", stat.percentile(99))
 
     def test_most_frequent(self):
+        print("TEST mostFrequent(j)\n")
         stat = Statistics("data_set_test.txt")
         with self.assertRaises(ValueError):
             most_frequent = stat.mostFrequent(-1)
@@ -184,7 +186,6 @@ class TestStatics(unittest.TestCase):
 
         self.assertEqual("[3, 4, 1, 13, 8, 5, 15]", stat.mostFrequent(stat.len()).__str__())
         print("Most frequent {} : ".format(stat.len()), stat.mostFrequent(stat.len()))
-
 
 
 if __name__ == "__main__":

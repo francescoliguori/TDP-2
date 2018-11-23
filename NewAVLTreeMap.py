@@ -98,7 +98,7 @@ class NewAVLTreeMap(TreeMap):
         #     p._node._balance_factor += 1
         # else:
         #     p._node._balance_factor = 0
-        rotate = False
+        #rotate = False
         if p is not None:
             if self.is_leaf(p):  # il padre del nodo eliminato è una foglia
                 p._node._balance_factor = 0
@@ -110,6 +110,10 @@ class NewAVLTreeMap(TreeMap):
                     p._node._balance_factor -= 1
                 # p = None
             else:
+                if self.right(p) is not None and self.left(p) is not None and self.is_leaf(
+                        self.right(p)) and self.is_leaf(
+                        self.left(p)):
+                    p._node._balance_factor = 0
                 if self.right(p) is not None and self.left(p) is not None and self.is_leaf(
                         self.right(p)) and not self.is_leaf(
                         self.left(p)):  # il padre del predecessore non ha nipoti a destra
@@ -178,7 +182,7 @@ class NewAVLTreeMap(TreeMap):
                                     self.left(p)._node._balance_factor = 0
                                     self.right(p)._node._balance_factor = 1
                                 p._node._balance_factor = 0
-                        rotate = True
+                        #rotate = True
                         key = p.key()
                         p = self.parent(p)
                         if p is not None and p.key() > key:
@@ -408,22 +412,30 @@ class NewAVLTreeMap(TreeMap):
     #                 break
     #
 
-def _testing_insert(keys, values=6):
+def testing_insert_int(keys, values=6):
+    tree_new_avl = NewAVLTreeMap()
+    lista = keys.split(",")
+    for i in range(len(lista)):
+        tree_new_avl[int(lista[i])] = values
+        print("\nInserisco key = ", lista[i])
+        for e in tree_new_avl.preorder():
+            print(e.key(), "balance: ", e._node._balance_factor)
+
+
+def testing_insert_char(keys, values=6):
     tree_new_avl = NewAVLTreeMap()
     lista = keys.split(",")
     for i in range(len(lista)):
         tree_new_avl[lista[i]] = values
-        print("\n Inserisco key = ", lista[i])
+        print("\nInserisco key = ", lista[i])
         for e in tree_new_avl.preorder():
             print(e.key(), "balance: ", e._node._balance_factor)
 
 
 if __name__ == "__main__":
-    tree_new_avl = NewAVLTreeMap()
+    testing_insert_char("j,p,f,d,g,l,v,c,n,s,x,q,u")
 
-    _testing_insert("j,p,f,d,g,l,v,c,n,s,x,q,u")
-
-    _testing_insert("5,10,8,23,6,11,15,16,18,25,1,4")
+    testing_insert_int("5,10,8,23,6,11,15,16,18,25,1,4")
 
 
     # print("")

@@ -5,26 +5,19 @@ class Statistics:
 
     def __init__(self, file_input):
         self.avl = NewAVLTreeMap()
-        # self._file_input = file_input  # questo attributo lo teniamo nel caso in cui nel metodo add bisogna aggiornare il file (è un dubbio)
         self._popola_albero(file_input)
 
-
-    def _popola_albero(self,file_input):
-        #  questa funzione popola l'albero con gli elementi del dataset. Se nella add non sarà necessario agiornare il dataset allora si
+    def _popola_albero(self, file_input):
+        #  questa funzione popola l'albero con gli elementi del dataset. Se nella add non sarà necessario aggiornare il dataset allora si
         #  potrà rifinire ulteriormente il codice chiamando nel while line la funzione add
-        try:
-            with open(file_input, "r") as file:  # lo statement with ci chiude il file automaticamente
-                line = file.readline()  # readline legge una riga volta per volta
-                while line:  # fino a quando la riga non è none
-                    lista = line.split(" ")  #  prende gli elementi separati dallo spazio e li mette in una lista, i valori sono stringhe
-                    if len(lista) != 2:
-                        raise ValueError("File Corrotto.")
-                    self.add(int(lista[0]), int(lista[1]))
-                    line = file.readline()  # passa alla riga successiva
-        except ValueError as e:
-            print("File Corrotto.")
-        except FileNotFoundError as e:
-            print("Impossibile aprire il file. Controllare che il nome e/o path sia corretto.")
+        with open(file_input, "r") as file:  # lo statement with ci chiude il file automaticamente
+            line = file.readline()  # readline legge una riga volta per volta
+            while line:  # fino a quando la riga non è none
+                lista = line.split(" ")  #  prende gli elementi separati dallo spazio e li mette in una lista, i valori sono stringhe
+                if len(lista) != 2:
+                    raise ValueError("File Corrotto.")
+                self.add(int(lista[0]), int(lista[1]))
+                line = file.readline()  # passa alla riga successiva
 
     def add(self, k, v):
         if not isinstance(k, int) or not isinstance(v, int):
@@ -35,11 +28,6 @@ class Statistics:
             self.avl[k][1] += v  # somma a total il value
         else:
             self.avl[k] = [1, v]  # crea un nodo con occorrenza a 1 e total pari al valore
-
-        # questo codice aggiorna anche il file, come ho detto prima, credo che non si deve fare
-        # with open(self._file_input, 'a') as file:  # 'a' aggiorna il file scrivendo una nuova riga alla fine
-        #
-        #     file.write("\n{} {}".format(k, v))  # .format sostituisce alle {} il valore che gli abbiamo passato
 
     def len(self):
         return len(self.avl)
@@ -57,12 +45,12 @@ class Statistics:
         occorrenze = 0
         for p in self.avl.preorder():
             occorrenze += self._get_frequency(p)
-            #occorrenze += e.value()[0]
+            # occorrenze += e.value()[0]
         return occorrenze
 
     def average(self):
         """Restituisce la media dei valori di tutte le occorrenze presenti nel dataset"""
-        #media dei valori = totale dei valori / totale delle occorrenze
+        # media dei valori = totale dei valori / totale delle occorrenze
 
         if self.len() == 0:
             raise Exception("Il dataset è vuoto")
@@ -78,8 +66,8 @@ class Statistics:
             se il numero  n di dati è pari, la mediana è stimata utilizzando i due valori
             che occupano le posizioni ( n / 2 ) e ( ( n / 2 ) + 1 )
             :return: il valore della mediana"""
-        if self.len() == 0:
-            raise Exception("Il dataset è vuoto")
+        # if self.len() == 0:
+        #     raise Exception("Il dataset è vuoto")
         return self.percentile(50)
 
     def percentile(self, j=20):
@@ -87,7 +75,7 @@ class Statistics:
             raise Exception("Il dataset è vuoto")
         if not isinstance(j, int):
             raise TypeError("Il tipo di j non è valido")
-        if j < 0 or j > 100:
+        if j < 1 or j > 99:
             raise ValueError("Il valore di j non è valido")
         entries = 0
         for key in self.avl.keys():
