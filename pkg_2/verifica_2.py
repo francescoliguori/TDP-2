@@ -18,7 +18,7 @@ class TestStatics(unittest.TestCase):
         print("TEST add()\n")
         stat = Statistics("data_set_test.txt")
         with self.assertRaises(TypeError):
-            stat.add("ciao", 5)
+            #stat.add("ciao", 5)
             stat.add("ciao", "ciao")
             stat.add(5, "ciao")
 
@@ -186,6 +186,20 @@ class TestStatics(unittest.TestCase):
 
         self.assertEqual("[3, 4, 1, 13, 8, 5, 15]", stat.mostFrequent(stat.len()).__str__())
         print("Most frequent {} : ".format(stat.len()), stat.mostFrequent(stat.len()))
+
+    def test_popola_albero_stringa(self):
+        with self.assertRaises(FileNotFoundError):
+            stat = Statistics("Path_errato")
+
+        with self.assertRaises(ValueError):
+            stat = Statistics("data_set_corrotto.txt")
+
+        with self.assertRaises(TypeError):
+            stat = Statistics("data_set_stringa_falso.txt")
+
+        stat = Statistics("data_set_stringa_intero.txt")
+        for e in stat.avl.preorder():
+            print(e.key(), " ", e.value())
 
 
 if __name__ == "__main__":

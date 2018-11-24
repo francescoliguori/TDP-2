@@ -5,6 +5,7 @@ class Statistics:
 
     def __init__(self, file_input):
         self.avl = NewAVLTreeMap()
+        self._entries = 0
         self._popola_albero(file_input)
 
     def _popola_albero(self, file_input):
@@ -16,24 +17,30 @@ class Statistics:
                 lista = line.split(" ")  #  prende gli elementi separati dallo spazio e li mette in una lista, i valori sono stringhe
                 if len(lista) != 2:
                     raise ValueError("File Corrotto.")
-                self.add(int(lista[0]), int(lista[1]))
+                if lista[0].isdigit():
+                    self.add(int(lista[0]), int(lista[1]))
+                else:
+                    self.add(lista[0], int(lista[1]))
                 line = file.readline()  # passa alla riga successiva
 
     def add(self, k, v):
-        if not isinstance(k, int) or not isinstance(v, int):
-            raise TypeError("Il tipo di k e/o v non è valido")
+        #if not isinstance(k, int) or not isinstance(v, int):
+            #raise TypeError("Il tipo di k e/o v non è valido")
+        if not isinstance(v, int):
+            raise TypeError("Il tipo del value non è valido")
         p = self.avl.find_position(k)  # controlla se la chiave è nell'albero
         if p is not None and p.key() == k:  # se p non ha trovato la chiave o ritorna None oppure il suo vicino(motivo della seconda condizione)
             self.avl[k][0] += 1  # aumenta di uno le occorrenze
             self.avl[k][1] += v  # somma a total il value
         else:
             self.avl[k] = [1, v]  # crea un nodo con occorrenza a 1 e total pari al valore
+        self._entries += 1
 
     def len(self):
         return len(self.avl)
 
-    def _get_frequency(self, p):
-        return p.value()[0]
+    # def _get_frequency(self, p):
+    #     return p.value()[0]
 
     def _get_total(self, p):
         return p.value()[1]
@@ -42,11 +49,11 @@ class Statistics:
         """Restituisce la somma delle frequenze di tutti gli elementi presenti nella mappa"""
         if self.len() == 0:
             raise Exception("Il dataset è vuoto")
-        occorrenze = 0
-        for p in self.avl.preorder():
-            occorrenze += self._get_frequency(p)
-            # occorrenze += e.value()[0]
-        return occorrenze
+        # occorrenze = 0
+        # for p in self.avl.preorder():
+        #     occorrenze += self._get_frequency(p)
+        #     # occorrenze += e.value()[0]
+        return self._entries
 
     def average(self):
         """Restituisce la media dei valori di tutte le occorrenze presenti nel dataset"""
@@ -58,7 +65,7 @@ class Statistics:
         complessivo = 0
         for p in self.avl.preorder():
             complessivo += self._get_total(p)
-        return complessivo/self.occurrences()
+        return complessivo/self._entries
 
     def median(self):
         """ se il numero n di dati è dispari la mediana corrisponde al valore centrale,
@@ -77,13 +84,13 @@ class Statistics:
             raise TypeError("Il tipo di j non è valido")
         if j < 1 or j > 99:
             raise ValueError("Il valore di j non è valido")
-        entries = 0
-        for key in self.avl.keys():
-            entries += self.avl[key][0]
+        # entries = 0
+        # for key in self.avl.keys():
+        #     entries += self.avl[key][0]
         freq = 0
         for node in self.avl.inorder():
             freq += node.value()[0]
-            if freq/entries >= j/100:
+            if freq/self._entries >= j/100:
                 return node.key()
 
     def mostFrequent(self, j):
