@@ -1,5 +1,5 @@
 import unittest
-from find_repetition import *
+from Repetition import *
 
 
 class TestProjectEx3(unittest.TestCase):
