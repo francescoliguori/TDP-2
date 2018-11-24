@@ -24,19 +24,19 @@ def chunk_reader(fileobj, chunk_size=1024):
             return
         yield chunk
 
-def find_md5_chain(folder):
+def find_repetition(folder):
     duplicate = []
     fileMap = ChainHashMap()
     for filename in os.listdir(folder):
 
         filepath = folder + filename
         if os.path.isfile(filepath):
-            md5 = hashlib.md5()
+            sha = hashlib.sha3_256()
             try:
                 with open(filepath, 'rb') as file:
                     for chunk in chunk_reader(file):
-                        md5.update(chunk)
-                    filehash = md5.hexdigest()
+                        sha.update(chunk)
+                    filehash = sha.hexdigest()
 
             except FileNotFoundError as e:
                 print("Impossibile aprire il file. Controllare che il path sia corretto.")
@@ -46,6 +46,7 @@ def find_md5_chain(folder):
                 fileMap.get(filehash).append(filename)
             else:
                 fileMap[filehash] = [filename]
+                print(filehash)
     for key in fileMap.keys():
         try:
             if len(fileMap.get(key)) > 1:
@@ -159,8 +160,11 @@ def find_md5_chain(folder):
 
 
 if __name__ == "__main__":
-    folder = "./filetest/"
+    folder = "E:/Grand Theft Auto V/"
 
-    print("File replicati:", find_md5_chain(folder), "\n\n\n")
+
+
+
+    print("File replicati:", find_repetition(folder), "\n\n\n")
 
 

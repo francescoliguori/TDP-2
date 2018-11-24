@@ -36,5 +36,12 @@ class TestProjectEx4(unittest.TestCase):
         self.assertTrue(circular_substring(substring,STRING))
         print("la sottostringa è presente")
 
+    def test_substring_case_sensitive(self):
+        print("----test substring case sensitive ----")
+        substring="Mondo"
+        print("substring : ",substring)
+        self.assertFalse(circular_substring(substring,STRING))
+        print("la sottostringa non è presente")
+
 if __name__ == "__main__":
     unittest.main()
