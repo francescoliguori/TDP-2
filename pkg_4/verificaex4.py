@@ -8,13 +8,6 @@ class TestProjectEx4(unittest.TestCase):
     print("stringa in cui cercare :",STRING)
     print("")
 
-    def test_substring_normal(self):
-        print("----test substring normale----")
-        substring="c"
-        print("substring : ",substring)
-        self.assertTrue(circular_substring(substring,STRING))
-        print("la sottostringa è presente")
-
     def test_substring_0(self):
         print("----test substring lunghezza 0 ----")
         substring=""
@@ -51,8 +44,7 @@ class TestProjectEx4(unittest.TestCase):
         self.assertFalse(circular_substring(substring,STRING))
         print("la sottostringa non è presente")
 
-    def test_string_empty(self):
-        string_empty=""
+    def test_substring_normal(self):
         print("----test substring normale----")
         substring="c"
         print("substring : ",substring)
