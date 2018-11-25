@@ -24,8 +24,8 @@ class Statistics:
                 line = file.readline()  # passa alla riga successiva
 
     def add(self, k, v):
-        #if not isinstance(k, int) or not isinstance(v, int):
-            #raise TypeError("Il tipo di k e/o v non è valido")
+        if len(self.avl)!=0 and not isinstance(k, type(self.avl.root().key())) :
+            raise TypeError("Il tipo di key non è valido")
         if not isinstance(v, int):
             raise TypeError("Il tipo del value non è valido")
         p = self.avl.find_position(k)  # controlla se la chiave è nell'albero

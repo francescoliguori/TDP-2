@@ -1,0 +1,10 @@
+3 9
+4 5
+15 10
+Giovanni 6
+Versace 7
+1 20
+DRake 10
+3 15
+Alex 10
+Britti 16
