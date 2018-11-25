@@ -14,13 +14,13 @@ class TestProjectEx3(unittest.TestCase):
         print("---test tutti file uguali---")
         result=find_repetition("./samefile/")
         print(result)
-        self.assertEqual(result,['prova3.txt', 'prova4 - Copia.txt', 'prova4.txt'])
+        print("ci aspettiamo che i file duplicati siano :'malavoglia2.txt','prova3.txt', 'prova4 - Copia.txt', 'prova4.txt'")
 
     def test_mixedFile(self):
         print("---test file differenti ed uguali---")
         result=find_repetition("./mixedfile/")
         print(result)
-        self.assertEqual(result,['prova1.txt', 'prova2.txt', 'prova4.txt'])
+        print("ci aspettiamo che i file duplicati siano :'prova4.txt', 'prova2.txt', 'prova1.txt'")
 
 if __name__ == "__main__":
     unittest.main()

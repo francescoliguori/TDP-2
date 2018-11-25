@@ -49,10 +49,6 @@ class Statistics:
         """Restituisce la somma delle frequenze di tutti gli elementi presenti nella mappa"""
         if self.len() == 0:
             raise Exception("Il dataset è vuoto")
-        # occorrenze = 0
-        # for p in self.avl.preorder():
-        #     occorrenze += self._get_frequency(p)
-        #     # occorrenze += e.value()[0]
         return self._entries
 
     def average(self):
@@ -73,8 +69,6 @@ class Statistics:
             se il numero  n di dati è pari, la mediana è stimata utilizzando i due valori
             che occupano le posizioni ( n / 2 ) e ( ( n / 2 ) + 1 )
             :return: il valore della mediana"""
-        # if self.len() == 0:
-        #     raise Exception("Il dataset è vuoto")
         return self.percentile(50)
 
     def percentile(self, j=20):
@@ -84,9 +78,6 @@ class Statistics:
             raise TypeError("Il tipo di j non è valido")
         if j < 1 or j > 99:
             raise ValueError("Il valore di j non è valido")
-        # entries = 0
-        # for key in self.avl.keys():
-        #     entries += self.avl[key][0]
         freq = 0
         for node in self.avl.inorder():
             freq += node.value()[0]

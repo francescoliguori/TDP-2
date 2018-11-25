@@ -1,5 +1,5 @@
 from NewAVLTreeMap import NewAVLTreeMap
-
+#from TdP_collection.map.avl_tree import AVLTreeMap
 
 def insert_key(tree, keys, values=6):
     for i in range(len(keys)):
